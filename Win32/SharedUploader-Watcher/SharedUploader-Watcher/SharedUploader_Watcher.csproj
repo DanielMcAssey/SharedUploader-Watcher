@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SharedUploader_Watcher</RootNamespace>
-    <AssemblyName>SharedUploader-Watcher</AssemblyName>
+    <AssemblyName>SharedUploader_Watcher</AssemblyName>
     <TargetFrameworkVersion>v3.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
