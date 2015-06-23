@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SharedUploader-Watcher")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("SharedUploader Watcher")]
+[assembly: AssemblyDescription("SharedUploader Watcher, part of the SharedUploader package.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("SharedUploader-Watcher")]
-[assembly: AssemblyCopyright("Copyright ©  2015")]
+[assembly: AssemblyCompany("GLOKON Limited")]
+[assembly: AssemblyProduct("SharedUploader Watcher")]
+[assembly: AssemblyCopyright("Copyright © GLOKON Limited 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("c8256008-ac8b-425c-a616-08e3c9baca93")]
+[assembly: Guid("b4360211-7149-4c3e-8bce-fea5eb1695a2")]
 
 // Version information for an assembly consists of the following four values:
 //

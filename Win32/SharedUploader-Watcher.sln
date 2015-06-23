@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedUploader_Watcher", "SharedUploader-Watcher\SharedUploader_Watcher.csproj", "{9B40E048-9EA7-4DFF-BC2C-C361CC585BDC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedUploader-Watcher", "SharedUploader-Watcher\SharedUploader-Watcher.csproj", "{5AFD4F1B-11FD-4C63-BC50-61893730B3D7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{9B40E048-9EA7-4DFF-BC2C-C361CC585BDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9B40E048-9EA7-4DFF-BC2C-C361CC585BDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9B40E048-9EA7-4DFF-BC2C-C361CC585BDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9B40E048-9EA7-4DFF-BC2C-C361CC585BDC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AFD4F1B-11FD-4C63-BC50-61893730B3D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AFD4F1B-11FD-4C63-BC50-61893730B3D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AFD4F1B-11FD-4C63-BC50-61893730B3D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AFD4F1B-11FD-4C63-BC50-61893730B3D7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
