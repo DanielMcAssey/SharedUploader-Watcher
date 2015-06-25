@@ -46,10 +46,10 @@
 			this.btnSaveSettings = new System.Windows.Forms.Button();
 			this.lblApiKey = new System.Windows.Forms.Label();
 			this.txtApiKey = new System.Windows.Forms.TextBox();
-			this.pbMain = new System.Windows.Forms.ProgressBar();
 			this.niWatcher = new System.Windows.Forms.NotifyIcon(this.components);
 			this.gbConsoleOutput = new System.Windows.Forms.GroupBox();
 			this.txtConsoleOutput = new System.Windows.Forms.TextBox();
+			this.txtConsoleProgressBar = new System.Windows.Forms.TextBox();
 			this.gbFileUpload.SuspendLayout();
 			this.gbTextUpload.SuspendLayout();
 			this.gbSettings.SuspendLayout();
@@ -61,10 +61,10 @@
 			this.txtUploadText.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtUploadText.Location = new System.Drawing.Point(9, 19);
+			this.txtUploadText.Location = new System.Drawing.Point(6, 19);
 			this.txtUploadText.Multiline = true;
 			this.txtUploadText.Name = "txtUploadText";
-			this.txtUploadText.Size = new System.Drawing.Size(501, 135);
+			this.txtUploadText.Size = new System.Drawing.Size(504, 137);
 			this.txtUploadText.TabIndex = 0;
 			this.txtUploadText.TextChanged += new System.EventHandler(this.txtUploadText_TextChanged);
 			// 
@@ -106,16 +106,16 @@
 			this.lblPath.AutoSize = true;
 			this.lblPath.Location = new System.Drawing.Point(6, 22);
 			this.lblPath.Name = "lblPath";
-			this.lblPath.Size = new System.Drawing.Size(32, 13);
+			this.lblPath.Size = new System.Drawing.Size(51, 13);
 			this.lblPath.TabIndex = 1;
-			this.lblPath.Text = "Path:";
+			this.lblPath.Text = "File Path:";
 			// 
 			// txtPath
 			// 
-			this.txtPath.Location = new System.Drawing.Point(44, 19);
+			this.txtPath.Location = new System.Drawing.Point(88, 19);
 			this.txtPath.Name = "txtPath";
 			this.txtPath.ReadOnly = true;
-			this.txtPath.Size = new System.Drawing.Size(328, 20);
+			this.txtPath.Size = new System.Drawing.Size(284, 20);
 			this.txtPath.TabIndex = 1;
 			// 
 			// gbTextUpload
@@ -124,7 +124,7 @@
 			this.gbTextUpload.Controls.Add(this.txtUploadText);
 			this.gbTextUpload.Location = new System.Drawing.Point(12, 144);
 			this.gbTextUpload.Name = "gbTextUpload";
-			this.gbTextUpload.Size = new System.Drawing.Size(516, 189);
+			this.gbTextUpload.Size = new System.Drawing.Size(516, 191);
 			this.gbTextUpload.TabIndex = 2;
 			this.gbTextUpload.TabStop = false;
 			this.gbTextUpload.Text = "Text Upload";
@@ -132,9 +132,9 @@
 			// btnUploadText
 			// 
 			this.btnUploadText.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.btnUploadText.Location = new System.Drawing.Point(378, 160);
+			this.btnUploadText.Location = new System.Drawing.Point(6, 162);
 			this.btnUploadText.Name = "btnUploadText";
-			this.btnUploadText.Size = new System.Drawing.Size(132, 23);
+			this.btnUploadText.Size = new System.Drawing.Size(504, 23);
 			this.btnUploadText.TabIndex = 1;
 			this.btnUploadText.Text = "Upload Text";
 			this.btnUploadText.UseVisualStyleBackColor = true;
@@ -219,15 +219,6 @@
 			this.txtApiKey.Size = new System.Drawing.Size(341, 20);
 			this.txtApiKey.TabIndex = 2;
 			// 
-			// pbMain
-			// 
-			this.pbMain.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.pbMain.Location = new System.Drawing.Point(12, 339);
-			this.pbMain.Name = "pbMain";
-			this.pbMain.Size = new System.Drawing.Size(516, 23);
-			this.pbMain.TabIndex = 4;
-			// 
 			// niWatcher
 			// 
 			this.niWatcher.Icon = ((System.Drawing.Icon)(resources.GetObject("niWatcher.Icon")));
@@ -236,32 +227,43 @@
 			// 
 			// gbConsoleOutput
 			// 
+			this.gbConsoleOutput.Controls.Add(this.txtConsoleProgressBar);
 			this.gbConsoleOutput.Controls.Add(this.txtConsoleOutput);
 			this.gbConsoleOutput.Location = new System.Drawing.Point(534, 12);
 			this.gbConsoleOutput.Name = "gbConsoleOutput";
-			this.gbConsoleOutput.Size = new System.Drawing.Size(331, 350);
+			this.gbConsoleOutput.Size = new System.Drawing.Size(331, 323);
 			this.gbConsoleOutput.TabIndex = 5;
 			this.gbConsoleOutput.TabStop = false;
 			this.gbConsoleOutput.Text = "Console Output";
 			// 
 			// txtConsoleOutput
 			// 
+			this.txtConsoleOutput.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtConsoleOutput.Location = new System.Drawing.Point(6, 19);
 			this.txtConsoleOutput.Multiline = true;
 			this.txtConsoleOutput.Name = "txtConsoleOutput";
 			this.txtConsoleOutput.ReadOnly = true;
 			this.txtConsoleOutput.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.txtConsoleOutput.Size = new System.Drawing.Size(319, 325);
+			this.txtConsoleOutput.Size = new System.Drawing.Size(319, 272);
 			this.txtConsoleOutput.TabIndex = 0;
 			this.txtConsoleOutput.WordWrap = false;
+			// 
+			// txtConsoleProgressBar
+			// 
+			this.txtConsoleProgressBar.Location = new System.Drawing.Point(6, 297);
+			this.txtConsoleProgressBar.Name = "txtConsoleProgressBar";
+			this.txtConsoleProgressBar.ReadOnly = true;
+			this.txtConsoleProgressBar.Size = new System.Drawing.Size(319, 20);
+			this.txtConsoleProgressBar.TabIndex = 1;
 			// 
 			// frmMain
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(877, 374);
+			this.ClientSize = new System.Drawing.Size(877, 347);
 			this.Controls.Add(this.gbConsoleOutput);
-			this.Controls.Add(this.pbMain);
 			this.Controls.Add(this.gbSettings);
 			this.Controls.Add(this.gbTextUpload);
 			this.Controls.Add(this.gbFileUpload);
@@ -299,13 +301,13 @@
 		private System.Windows.Forms.TextBox txtApiKey;
 		private System.Windows.Forms.Button btnSaveSettings;
 		private System.Windows.Forms.Label lblApiKeyWarning;
-		private System.Windows.Forms.ProgressBar pbMain;
 		private System.Windows.Forms.TextBox txtPostmanPath;
 		private System.Windows.Forms.Button btnBrowsePostman;
 		private System.Windows.Forms.Label lblPostmanPath;
 		private System.Windows.Forms.NotifyIcon niWatcher;
 		private System.Windows.Forms.GroupBox gbConsoleOutput;
 		private System.Windows.Forms.TextBox txtConsoleOutput;
+		private System.Windows.Forms.TextBox txtConsoleProgressBar;
 
 	}
 }

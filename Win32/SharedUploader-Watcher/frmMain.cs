@@ -7,11 +7,16 @@ using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace SharedUploader_Watcher
 {
 	public partial class frmMain : Form
 	{
+		// Properties
+		bool __isFileUpload = false;
+		bool __isTextUpload = false;
+
 		public frmMain()
 		{
 			InitializeComponent();
@@ -31,13 +36,16 @@ namespace SharedUploader_Watcher
 			btnUploadFile.Enabled = false;
 			btnUploadText.Enabled = false;
 			this.ShowInTaskbar = false;
+#if !DEBUG
 			this.WindowState = FormWindowState.Minimized;
+#endif
 		}
 
 		private void frmMain_Resize(object sender, EventArgs e)
 		{
 			if (this.WindowState == FormWindowState.Minimized)
 			{
+				txtConsoleOutput.Text = "";
 				niWatcher.Visible = true;
 				this.Hide();
 			}
@@ -62,14 +70,6 @@ namespace SharedUploader_Watcher
 		}
 		#endregion
 
-		private void btnSaveSettings_Click(object sender, EventArgs e)
-		{
-			Properties.Settings.Default.API_KEY = txtApiKey.Text;
-			Properties.Settings.Default.POSTMAN_PATH = txtPostmanPath.Text;
-			Properties.Settings.Default.Save();
-			CheckAPIKey();
-		}
-
 		#region "Helper Functions"
 		private void UploadText(string txtToAdd)
 		{
@@ -87,23 +87,37 @@ namespace SharedUploader_Watcher
 
 		private void UploadItem(string fileLocation)
 		{
-			pbMain.Value = 10;
 			if (Properties.Settings.Default.API_KEY.Length > 0 && Properties.Settings.Default.POSTMAN_PATH.Length > 0)
 			{
-				pbMain.Value = 25;
 				if (File.Exists(Properties.Settings.Default.POSTMAN_PATH) && File.Exists(fileLocation))
 				{
-					pbMain.Value = 50;
+					//Reset Console output
+					txtConsoleOutput.Text = "";
+					txtConsoleProgressBar.Text = "";
+
+					// Set process up
 					Process uploaderPostman = new Process();
 					uploaderPostman.StartInfo.FileName = Properties.Settings.Default.POSTMAN_PATH;
 					uploaderPostman.StartInfo.Arguments = Properties.Settings.Default.API_KEY + " \"" + fileLocation + "\"";
 					uploaderPostman.StartInfo.UseShellExecute = false;
-					uploaderPostman.StartInfo.CreateNoWindow = true;
+					
+					// Setup output redirection
 					uploaderPostman.StartInfo.RedirectStandardOutput = true;
+					uploaderPostman.StartInfo.RedirectStandardError = true;
+					uploaderPostman.EnableRaisingEvents = true;
+					uploaderPostman.StartInfo.CreateNoWindow = true;
+
+					// Data received handlers
+					uploaderPostman.ErrorDataReceived += proc_DataReceived;
+					uploaderPostman.OutputDataReceived += proc_DataReceived;
+
+					// Exit handler
+					uploaderPostman.Exited += proc_Exited;
+
+					// Start process
 					uploaderPostman.Start();
-					txtConsoleOutput.Text = uploaderPostman.StandardOutput.ReadToEnd();
-					uploaderPostman.WaitForExit();
-					pbMain.Value = 100;
+					uploaderPostman.BeginErrorReadLine();
+					uploaderPostman.BeginOutputReadLine();
 				}
 				else
 				{
@@ -114,7 +128,6 @@ namespace SharedUploader_Watcher
 			{
 				MessageBox.Show("You are required to have the path to the Postman application and have a valid API key saved.", "Watcher - Missing Settings", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
-			pbMain.Value = 0;
 		}
 
 		private void CheckAPIKey()
@@ -126,6 +139,32 @@ namespace SharedUploader_Watcher
 			else
 			{
 				lblApiKeyWarning.Visible = false;
+			}
+		}
+
+		delegate void UploadResetCallback();
+
+		private void UploadedReset()
+		{
+			if(InvokeRequired)
+			{
+				this.Invoke(new UploadResetCallback(UploadedReset));
+			}
+			else
+			{
+				if (this.__isFileUpload)
+				{
+					this.btnUploadFile.Enabled = false;
+					this.txtPath.Text = "";
+					this.__isFileUpload = false;
+				}
+
+				if (this.__isTextUpload)
+				{
+					this.btnUploadText.Enabled = false;
+					this.txtUploadText.Text = "";
+					this.__isTextUpload = false;
+				}
 			}
 		}
 		#endregion
@@ -142,7 +181,56 @@ namespace SharedUploader_Watcher
 				btnUploadText.Enabled = false;
 			}
 		}
+
+		private void proc_Exited(object sender, EventArgs e)
+		{
+			Process uploaderPostman = (Process)sender;
+			if(uploaderPostman.ExitCode == 0)
+			{
+				this.UploadedReset();
+			}
+			uploaderPostman.Close();
+		}
+
+		private void proc_DataReceived(object sender, DataReceivedEventArgs e)
+		{
+			if (e.Data != null)
+			{
+				this.AppendConsoleOutput(e.Data);
+			}
+		}
+
+		delegate void AppendTextCallback(string textToAdd);
+
+		private void AppendConsoleOutput(string textToAdd)
+		{
+			if (this.txtConsoleOutput.InvokeRequired)
+			{
+				AppendTextCallback d = new AppendTextCallback(AppendConsoleOutput);
+				this.Invoke(d, new object[] { textToAdd });
+			}
+			else
+			{
+				if(textToAdd.StartsWith("UPLOADING:"))
+				{
+					this.txtConsoleProgressBar.Text = (textToAdd + Environment.NewLine).Replace("UPLOADING: ", "");
+				}
+				else
+				{
+					this.txtConsoleOutput.AppendText(textToAdd + Environment.NewLine);
+				}
+			}
+		}
 		#endregion
+
+		#region "Buttons (Click)"
+		private void btnSaveSettings_Click(object sender, EventArgs e)
+		{
+			Properties.Settings.Default.API_KEY = txtApiKey.Text;
+			Properties.Settings.Default.POSTMAN_PATH = txtPostmanPath.Text;
+			Properties.Settings.Default.Save();
+			CheckAPIKey();
+		}
 
 		private void btnBrowsePostman_Click(object sender, EventArgs e)
 		{
@@ -172,16 +260,16 @@ namespace SharedUploader_Watcher
 
 		private void btnUploadFile_Click(object sender, EventArgs e)
 		{
+			__isFileUpload = true;
 			UploadItem(txtPath.Text);
-			btnUploadFile.Enabled = false;
-			txtPath.Text = "";
 		}
 
 		private void btnUploadText_Click(object sender, EventArgs e)
 		{
+			__isTextUpload = true;
 			UploadText(txtUploadText.Text);
-			btnUploadText.Enabled = false;
-			txtUploadText.Text = "";
 		}
+
+		#endregion
 	}
 }
