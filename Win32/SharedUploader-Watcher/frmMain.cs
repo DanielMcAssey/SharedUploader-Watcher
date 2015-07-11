@@ -8,6 +8,7 @@ using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using System.Threading;
+using System.Reflection;
 
 namespace SharedUploader_Watcher
 {
@@ -23,6 +24,7 @@ namespace SharedUploader_Watcher
 		}
 
 		#region "Form Specific Events"
+
 		private void frmMain_Load(object sender, EventArgs e)
 		{
 			lblApiKeyWarning.Visible = false;
@@ -56,6 +58,15 @@ namespace SharedUploader_Watcher
 				{
 					this.ShowInTaskbar = true;
 				}
+			}	
+		}
+
+		private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			if (e.CloseReason == CloseReason.UserClosing)
+			{
+				e.Cancel = true;
+				this.WindowState = FormWindowState.Minimized;
 			}
 		}
 
@@ -66,6 +77,16 @@ namespace SharedUploader_Watcher
 			{
 				this.Show();
 				this.WindowState = FormWindowState.Normal;
+			}
+		}
+
+		private void niWatcher_MouseUp(object sender, MouseEventArgs e)
+		{
+			// FIX FOR KB-135788
+			if (e.Button == MouseButtons.Right)
+			{
+				MethodInfo mi = typeof(NotifyIcon).GetMethod("ShowContextMenu", BindingFlags.Instance | BindingFlags.NonPublic);
+				mi.Invoke(niWatcher, null);
 			}
 		}
 		#endregion
@@ -93,7 +114,6 @@ namespace SharedUploader_Watcher
 				{
 					//Reset Console output
 					txtConsoleOutput.Text = "";
-					txtConsoleProgressBar.Text = "";
 
 					// Set process up
 					Process uploaderPostman = new Process();
@@ -152,6 +172,7 @@ namespace SharedUploader_Watcher
 			}
 			else
 			{
+				this.txtConsoleProgressBar.Text = "";
 				if (this.__isFileUpload)
 				{
 					this.btnUploadFile.Enabled = false;
@@ -270,6 +291,15 @@ namespace SharedUploader_Watcher
 			UploadText(txtUploadText.Text);
 		}
 
+		private void toolStripExit_Click(object sender, EventArgs e)
+		{
+			DialogResult exitDialog = MessageBox.Show("Are you sure you want to quit the application?", "Exit?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+			if(exitDialog == System.Windows.Forms.DialogResult.Yes)
+			{
+				Application.Exit();
+			}
+		}
 		#endregion
+
 	}
 }

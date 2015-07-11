@@ -48,12 +48,15 @@
 			this.txtApiKey = new System.Windows.Forms.TextBox();
 			this.niWatcher = new System.Windows.Forms.NotifyIcon(this.components);
 			this.gbConsoleOutput = new System.Windows.Forms.GroupBox();
-			this.txtConsoleOutput = new System.Windows.Forms.TextBox();
 			this.txtConsoleProgressBar = new System.Windows.Forms.TextBox();
+			this.txtConsoleOutput = new System.Windows.Forms.TextBox();
+			this.contextMenuNotifyIcon = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.toolStripExit = new System.Windows.Forms.ToolStripMenuItem();
 			this.gbFileUpload.SuspendLayout();
 			this.gbTextUpload.SuspendLayout();
 			this.gbSettings.SuspendLayout();
 			this.gbConsoleOutput.SuspendLayout();
+			this.contextMenuNotifyIcon.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// txtUploadText
@@ -221,9 +224,11 @@
 			// 
 			// niWatcher
 			// 
+			this.niWatcher.ContextMenuStrip = this.contextMenuNotifyIcon;
 			this.niWatcher.Icon = ((System.Drawing.Icon)(resources.GetObject("niWatcher.Icon")));
 			this.niWatcher.Text = "SharedUploader Watcher";
 			this.niWatcher.Click += new System.EventHandler(this.niWatcher_Click);
+			this.niWatcher.MouseUp += new System.Windows.Forms.MouseEventHandler(this.niWatcher_MouseUp);
 			// 
 			// gbConsoleOutput
 			// 
@@ -235,6 +240,14 @@
 			this.gbConsoleOutput.TabIndex = 5;
 			this.gbConsoleOutput.TabStop = false;
 			this.gbConsoleOutput.Text = "Console Output";
+			// 
+			// txtConsoleProgressBar
+			// 
+			this.txtConsoleProgressBar.Location = new System.Drawing.Point(6, 297);
+			this.txtConsoleProgressBar.Name = "txtConsoleProgressBar";
+			this.txtConsoleProgressBar.ReadOnly = true;
+			this.txtConsoleProgressBar.Size = new System.Drawing.Size(319, 20);
+			this.txtConsoleProgressBar.TabIndex = 1;
 			// 
 			// txtConsoleOutput
 			// 
@@ -250,13 +263,20 @@
 			this.txtConsoleOutput.TabIndex = 0;
 			this.txtConsoleOutput.WordWrap = false;
 			// 
-			// txtConsoleProgressBar
+			// contextMenuNotifyIcon
 			// 
-			this.txtConsoleProgressBar.Location = new System.Drawing.Point(6, 297);
-			this.txtConsoleProgressBar.Name = "txtConsoleProgressBar";
-			this.txtConsoleProgressBar.ReadOnly = true;
-			this.txtConsoleProgressBar.Size = new System.Drawing.Size(319, 20);
-			this.txtConsoleProgressBar.TabIndex = 1;
+			this.contextMenuNotifyIcon.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripExit});
+			this.contextMenuNotifyIcon.Name = "contextMenuNotifyIcon";
+			this.contextMenuNotifyIcon.Size = new System.Drawing.Size(93, 26);
+			// 
+			// toolStripExit
+			// 
+			this.toolStripExit.Name = "toolStripExit";
+			this.toolStripExit.Size = new System.Drawing.Size(92, 22);
+			this.toolStripExit.Text = "Exit";
+			this.toolStripExit.ToolTipText = "Text";
+			this.toolStripExit.Click += new System.EventHandler(this.toolStripExit_Click);
 			// 
 			// frmMain
 			// 
@@ -272,6 +292,7 @@
 			this.MaximizeBox = false;
 			this.Name = "frmMain";
 			this.Text = "SharedUploader - Watcher";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
 			this.Load += new System.EventHandler(this.frmMain_Load);
 			this.Resize += new System.EventHandler(this.frmMain_Resize);
 			this.gbFileUpload.ResumeLayout(false);
@@ -282,6 +303,7 @@
 			this.gbSettings.PerformLayout();
 			this.gbConsoleOutput.ResumeLayout(false);
 			this.gbConsoleOutput.PerformLayout();
+			this.contextMenuNotifyIcon.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -308,6 +330,8 @@
 		private System.Windows.Forms.GroupBox gbConsoleOutput;
 		private System.Windows.Forms.TextBox txtConsoleOutput;
 		private System.Windows.Forms.TextBox txtConsoleProgressBar;
+		private System.Windows.Forms.ContextMenuStrip contextMenuNotifyIcon;
+		private System.Windows.Forms.ToolStripMenuItem toolStripExit;
 
 	}
 }
